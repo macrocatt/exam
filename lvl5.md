@@ -261,3 +261,43 @@ ________________________________
 | -1 |  |  
 
 **Внимание:** Мы любезно напоминаем вам, что процедура тестирования вашей программы включает анализ стиля кода. Пожалуйста, загляните в папку materials/. Также обязательно проверяйте вашу программу на утечки памяти!
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    int num, count = 0;
+    int *sequence = NULL;
+
+    // Чтение последовательности до -1
+    while (scanf("%d", &num) == 1 && num != -1) {
+        int *temp = realloc(sequence, (count + 1) * sizeof(int));
+        if (temp == NULL) {
+            free(sequence);
+            printf("n/a");
+            return 0;
+        }
+        sequence = temp;
+        sequence[count++] = num;
+    }
+
+    // Проверка корректности завершения ввода
+    if (num != -1) {
+        free(sequence);
+        printf("n/a");
+        return 0;
+    }
+
+    // Вывод элементов в обратном порядке
+    for (int i = count - 1; i >= 0; i--) {
+        if (i < count - 1) {
+            printf(" ");
+        }
+        printf("%d", sequence[i]);
+    }
+
+    free(sequence);
+
+    return 0;
+}
+```
